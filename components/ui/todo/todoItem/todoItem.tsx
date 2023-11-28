@@ -31,9 +31,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
+import { useToast } from "../../use-toast";
 
 const TodoItem = ({ id, title, description, completed, setTodos }) => {
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
 
   const formSchema = z.object({
     title: z.string().min(2, {
@@ -57,17 +59,32 @@ const TodoItem = ({ id, title, description, completed, setTodos }) => {
   function onSubmit(todo: z.infer<typeof formSchema>) {
     const { title, description, completed } = todo;
     editTodo(id, title, description, completed);
+    if (!editTodo) {
+      return toast({
+        variant: "destructive",
+        description: "Failed to update todo.",
+      });
+    }
+    toast({
+      description: "Your todo has been edited.",
+    });
     setTodos(getTodos());
     setOpen(false);
   }
 
   const handleCompleteTodo = (id: string) => {
     completeTodo(id);
+    toast({
+      description: "Todo updated.",
+    });
     setTodos(getTodos());
   };
 
   const handleDeleteTodo = (id: string) => {
     deleteTodo(id);
+    toast({
+      description: "Todo deleted.",
+    });
     setTodos(getTodos());
   };
 

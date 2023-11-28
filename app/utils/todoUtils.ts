@@ -4,14 +4,20 @@ import { v4 as uuidv4 } from "uuid";
 const TODO_STORAGE_KEY = "todos-haifan";
 
 const getStoredTodos = (): Todo[] => {
-  const storedTodos = localStorage.getItem(TODO_STORAGE_KEY);
-  return storedTodos ? JSON.parse(storedTodos) : [];
+  if (typeof window !== "undefined") {
+    const storedTodos = localStorage.getItem(TODO_STORAGE_KEY);
+    return storedTodos ? JSON.parse(storedTodos) : [];
+  }
+  return [];
 };
 
 let todos: Todo[] = getStoredTodos();
 
 const updateStoredTodos = () => {
-  localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(todos));
+  if (typeof window !== "undefined") {
+    localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(todos));
+    return;
+  }
 };
 
 export const addTodo = (

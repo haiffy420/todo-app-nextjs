@@ -26,6 +26,7 @@ import { Switch } from "@/components/ui/switch";
 import { addTodo, getTodos } from "@/app/utils/todoUtils";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import { useToast } from "../../use-toast";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -39,7 +40,7 @@ const formSchema = z.object({
 
 const TodoForm = ({ setTodos }) => {
   const [open, setOpen] = useState(false);
-  const [editId, setEditId] = useState<number | null>(null);
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,6 +54,15 @@ const TodoForm = ({ setTodos }) => {
   function onSubmit(todo: z.infer<typeof formSchema>) {
     const { title, description, completed } = todo;
     addTodo(title, description, completed);
+    if (!addTodo) {
+      return toast({
+        variant: "destructive",
+        description: "Your todo has been saved.",
+      });
+    }
+    toast({
+      description: "Your todo has been saved.",
+    });
     setTodos(getTodos());
     form.reset();
     setOpen(false);

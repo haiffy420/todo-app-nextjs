@@ -6,6 +6,7 @@ import { Todo } from "./interfaces/Todo.interface";
 import TodoSection from "@/components/ui/todo/todoSection";
 import { FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -19,8 +20,10 @@ export default function Home() {
 
   useEffect(() => {
     setSearchTodos(
-      todos.filter((todo) =>
-        todo.title.toLowerCase().includes(query.toLowerCase())
+      todos.filter(
+        (todo) =>
+          todo.title.toLowerCase().includes(query.toLowerCase()) ||
+          todo.description.toLowerCase().includes(query.toLowerCase())
       )
     );
   }, [query, todos]);
@@ -48,6 +51,7 @@ export default function Home() {
           <p>Next.js Todo App || Made by Haifan with ❤️ and ☕</p>
         </div>
       </div>
+      <Toaster />
     </>
   );
 }
