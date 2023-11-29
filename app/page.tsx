@@ -1,8 +1,8 @@
 "use client";
 import Navbar from "@/components/ui/navbar/navbar";
 import { useEffect, useState } from "react";
-import { getTodos } from "./utils/todoUtils";
-import { Todo } from "./interfaces/Todo.interface";
+import { getTodos } from "../lib/utils/todoUtils";
+import { Todo } from "@/lib/interfaces/Todo.interface";
 import TodoSection from "@/components/ui/todo/todoSection";
 import { FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";

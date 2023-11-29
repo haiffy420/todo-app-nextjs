@@ -23,7 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { addTodo, getTodos } from "@/app/utils/todoUtils";
+import { addTodo, getTodos } from "@/lib/utils/todoUtils";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useToast } from "../../use-toast";
