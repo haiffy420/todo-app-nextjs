@@ -71,7 +71,7 @@ const TodoForm = ({
 
   return (
     <>
-      <ScrollArea className="max-h-[590px] w-[395px] pr-7 mx-1">
+      <ScrollArea className="max-h-[590px] sm:max-w-[450px] pr-7 ml-1 -mr-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="grid gap-4 py-4 px-1">

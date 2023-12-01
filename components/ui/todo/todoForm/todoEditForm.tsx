@@ -29,8 +29,9 @@ const TodoEditForm = ({
   setOpenEditForm,
   handleCompleteTodo,
 }) => {
-  const [tempTodoDetails, setTempTodoDetails] =
-    useState<TodoDetail[]>(todoDetail);
+  const [tempTodoDetails, setTempTodoDetails] = useState<TodoDetail[]>(
+    todoDetail ? todoDetail : []
+  );
   const { toast } = useToast();
 
   const form = useForm<zodinfer<typeof formSchema>>({
@@ -38,7 +39,7 @@ const TodoEditForm = ({
     defaultValues: {
       title: title,
       description: description,
-      todoDetail: todoDetail,
+      todoDetail: todoDetail ? todoDetail : [],
       completed: completed,
     },
   });
@@ -91,7 +92,7 @@ const TodoEditForm = ({
             />
           </span>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
             <DialogTitle>Edit Todo</DialogTitle>
           </DialogHeader>

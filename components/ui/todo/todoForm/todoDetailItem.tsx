@@ -45,7 +45,7 @@ const TodoDetailItem = ({
         </span>
       </div>
       {todoDetail.title.length < 2 && (
-        <p className="text-sm font-medium text-destructive">
+        <p className="text-sm font-medium text-destructive sm:max-w-[10px]">
           Task title must be at least 2 characters.
         </p>
       )}
