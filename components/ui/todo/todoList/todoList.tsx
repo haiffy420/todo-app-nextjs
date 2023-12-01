@@ -19,7 +19,7 @@ const TodoList = ({ todos, label, setTodos }) => {
       <h1 className="text-xl font-bold">{label}</h1>
       {loading ? (
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <Skeleton className="md:h-52 sm:h-auto translate-y-1 bg-foreground dark:bg-zinc-900" />
+          <Skeleton className="md:h-52 sm:h-auto translate-y-1 bg-foreground dark:bg-muted" />
         </div>
       ) : (
         <>

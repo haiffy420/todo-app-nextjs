@@ -1,4 +1,4 @@
-import { Todo } from "../interfaces/Todo.interface";
+import { Todo, TodoDetail } from "../types/Todo";
 import { v4 as uuidv4 } from "uuid";
 
 const TODO_STORAGE_KEY = "todos-haifan";
@@ -23,13 +23,17 @@ const updateStoredTodos = () => {
 export const addTodo = (
   title: string,
   description: string,
+  todoDetail: TodoDetail[],
   completed: boolean
 ) => {
   const newTodo: Todo = {
     id: uuidv4(),
     title,
     description,
+    todoDetail,
     completed,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   };
   todos = [...todos, newTodo];
   updateStoredTodos();
@@ -55,15 +59,17 @@ export const editTodo = (
   id: string,
   title: string,
   description: string,
+  todoDetail: TodoDetail[],
   completed: boolean
 ) => {
   todos = todos.map((todo) =>
     todo.id === id
       ? {
           ...todo,
-          title: title,
-          description: description,
-          completed: completed,
+          title,
+          description,
+          todoDetail,
+          completed,
         }
       : todo
   );
