@@ -49,7 +49,7 @@ const TodoItem = ({
       hover:shadow-zinc-900 dark:hover:shadow-lg dark:hover:shadow-slate-300 dark:hover:border-slate-300
       hover:translate-y-0 duration-300 ease-in-out"
     >
-      <div className="truncate ...">
+      <div>
         <h1 className="text-4xl md:text-2xl font-bold">{title}</h1>
         <p className="text-xl md:text-lg font-light">{description}</p>
       </div>
