@@ -4,11 +4,8 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { infer as zodinfer } from "zod";
-import { MdCheckCircle, MdCreate } from "react-icons/md";
 import {
-  Dialog,
   DialogContent,
-  DialogTrigger,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -24,10 +21,8 @@ const TodoEdit = ({
   description,
   todoDetail,
   completed,
-  openEditForm,
   setTodos,
   setOpenEditForm,
-  handleCompleteTodo,
 }) => {
   const [tempTodoDetails, setTempTodoDetails] = useState<TodoDetail[]>(
     todoDetail ? todoDetail : []
@@ -82,37 +77,18 @@ const TodoEdit = ({
   }
 
   return (
-    <>
-      <Dialog open={openEditForm} onOpenChange={setOpenEditForm}>
-        <DialogTrigger>
-          <span className="text-yellow-500 cursor-pointer">
-            <MdCreate
-              title="Edit"
-              className="translate-y-1 hover:translate-y-0"
-            />
-          </span>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[400px]">
-          <DialogHeader>
-            <DialogTitle>Edit Todo</DialogTitle>
-          </DialogHeader>
-          <TodoForm
-            setTempTodoDetails={setTempTodoDetails}
-            tempTodoDetails={tempTodoDetails}
-            form={form}
-            onSubmit={onSubmit}
-            isEditing={true}
-          />
-        </DialogContent>
-      </Dialog>
-      <span className="sm:text-zinc-700 text-green-500 hover:text-green-500 cursor-pointer">
-        <MdCheckCircle
-          onClick={() => handleCompleteTodo(id)}
-          title="Completed?"
-          className="translate-y-1 hover:translate-y-0"
-        />
-      </span>
-    </>
+    <DialogContent className="sm:max-w-[400px]">
+      <DialogHeader>
+        <DialogTitle>Edit Todo</DialogTitle>
+      </DialogHeader>
+      <TodoForm
+        setTempTodoDetails={setTempTodoDetails}
+        tempTodoDetails={tempTodoDetails}
+        form={form}
+        onSubmit={onSubmit}
+        isEditing={true}
+      />
+    </DialogContent>
   );
 };
 

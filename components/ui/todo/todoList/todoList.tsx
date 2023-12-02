@@ -5,7 +5,7 @@ import TodoItem from "../todoItem/todoItem";
 import { Skeleton } from "../../skeleton";
 
 const TodoList = ({ todos, label, setTodos }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -28,7 +28,7 @@ const TodoList = ({ todos, label, setTodos }) => {
               <p className="md:h-36 sm:h-auto">No todos to show.</p>
             </div>
           ) : (
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {todos.map((todo) => (
                 <TodoItem setTodos={setTodos} key={todo.id} todo={todo} />
               ))}

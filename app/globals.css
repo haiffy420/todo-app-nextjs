@@ -81,7 +81,7 @@
 
 .todo-card {
   @apply flex flex-col justify-between
-  md:h-52 sm:h-auto gap-4
+  h-auto gap-4
   bg-foreground dark:bg-zinc-900 rounded-md
   dark:text-foreground text-background cursor-pointer
   p-4 translate-y-2
