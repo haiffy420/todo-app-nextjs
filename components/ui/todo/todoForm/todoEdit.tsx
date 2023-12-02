@@ -4,6 +4,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { infer as zodinfer } from "zod";
+import { MdCheckCircle, MdCreate } from "react-icons/md";
 import {
   Dialog,
   DialogContent,
@@ -15,22 +16,31 @@ import { useToast } from "../../use-toast";
 import { TodoDetail } from "@/lib/types/Todo";
 import TodoForm from "./todoForm";
 import { formSchema, todoDetailSchema } from "@/lib/utils/todoFormUtils";
-import { addTodo, getTodos } from "@/lib/utils/todoUtils";
-import { Button } from "../../button";
-import { FaPlus } from "react-icons/fa";
+import { editTodo, getTodos } from "@/lib/utils/todoUtils";
 
-const TodoAddForm = ({ setTodos }) => {
-  const [open, setOpen] = useState(false);
+const TodoEdit = ({
+  id,
+  title,
+  description,
+  todoDetail,
+  completed,
+  openEditForm,
+  setTodos,
+  setOpenEditForm,
+  handleCompleteTodo,
+}) => {
+  const [tempTodoDetails, setTempTodoDetails] = useState<TodoDetail[]>(
+    todoDetail ? todoDetail : []
+  );
   const { toast } = useToast();
-  const [tempTodoDetails, setTempTodoDetails] = useState<TodoDetail[]>([]);
 
   const form = useForm<zodinfer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      todoDetail: tempTodoDetails,
-      completed: false,
+      title: title,
+      description: description,
+      todoDetail: todoDetail ? todoDetail : [],
+      completed: completed,
     },
   });
 
@@ -57,49 +67,53 @@ const TodoAddForm = ({ setTodos }) => {
       return;
     }
 
-    addTodo(title, description, tempTodoDetails, completed);
-    if (!addTodo) {
+    editTodo(id, title, description, tempTodoDetails, completed);
+    if (!editTodo) {
       return toast({
         variant: "destructive",
-        description: "Failed to add todo.",
+        description: "Failed to update todo.",
       });
     }
     toast({
-      description: "Your todo has been saved.",
+      description: "Your todo has been edited.",
     });
     setTodos(getTodos());
-    form.reset();
-    setTempTodoDetails([]);
-    setOpen(false);
+    setOpenEditForm(false);
   }
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button
-            variant="outline"
-            size="lg"
-            className="bg-foreground hover:bg-foreground/90 text-background hover:text-background shadow-lg gap-4"
-          >
-            <FaPlus /> Add Todo
-          </Button>
+      <Dialog open={openEditForm} onOpenChange={setOpenEditForm}>
+        <DialogTrigger>
+          <span className="text-yellow-500 cursor-pointer">
+            <MdCreate
+              title="Edit"
+              className="translate-y-1 hover:translate-y-0"
+            />
+          </span>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Add Todo</DialogTitle>
+            <DialogTitle>Edit Todo</DialogTitle>
           </DialogHeader>
           <TodoForm
             setTempTodoDetails={setTempTodoDetails}
             tempTodoDetails={tempTodoDetails}
             form={form}
             onSubmit={onSubmit}
-            isEditing={false}
+            isEditing={true}
           />
         </DialogContent>
       </Dialog>
+      <span className="sm:text-zinc-700 text-green-500 hover:text-green-500 cursor-pointer">
+        <MdCheckCircle
+          onClick={() => handleCompleteTodo(id)}
+          title="Completed?"
+          className="translate-y-1 hover:translate-y-0"
+        />
+      </span>
     </>
   );
 };
 
-export default TodoAddForm;
+export default TodoEdit;

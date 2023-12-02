@@ -65,10 +65,6 @@ const TodoForm = ({
     setTempTodoDetails(updatedTodoDetails);
   };
 
-  const handleCancel = () => {
-    setTempTodoDetails(tempTodoDetails);
-  };
-
   return (
     <>
       <ScrollArea className="max-h-[590px] sm:max-w-[450px] pr-7 ml-1 -mr-6">
@@ -138,11 +134,7 @@ const TodoForm = ({
             {isEditing ? (
               <DialogFooter className="flex flex-row justify-between">
                 <DialogClose asChild>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={() => handleCancel()}
-                  >
+                  <Button type="button" variant="secondary">
                     Close
                   </Button>
                 </DialogClose>

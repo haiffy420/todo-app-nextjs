@@ -78,3 +78,15 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #888;
 }
+
+.todo-card {
+  @apply flex flex-col justify-between
+  md:h-52 sm:h-auto gap-4
+  bg-foreground dark:bg-zinc-900 rounded-md
+  dark:text-foreground text-background cursor-pointer
+  p-4 translate-y-2
+  shadow-[10px_10px_50px_-15px_rgba(0,0,0,0.7)] dark:shadow-none
+  transition hover:shadow-[10px_10px_15px_-3px_rgba(0,0,0,0.7)] hover:border-2 hover:border-solid hover:border-zinc-900
+  hover:shadow-zinc-900 dark:hover:shadow-lg dark:hover:shadow-slate-300 dark:hover:border-slate-300
+  hover:translate-y-0 duration-300 ease-in-out;
+}
