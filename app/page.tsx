@@ -10,7 +10,7 @@ import TodoAdd from "@/components/ui/todo/todoForm/todoAdd";
 import Link from "next/link";
 import { Info } from "lucide-react";
 
-export default function Home() {
+export default function Guest() {
   const [query, setQuery] = useState("");
   const [searchTodos, setSearchTodos] = useState<Todo[]>([]);
   const [todos, setTodos] = useState<Todo[]>(getTodos);
