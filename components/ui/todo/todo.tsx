@@ -1,10 +1,12 @@
-import TodoAdd from "./todoForm/todoAdd";
+"use client";
+import { usePathname } from "next/navigation";
 import TodoList from "./todoList/todoList";
 
 const TodoSection = ({ activeTodos, completedTodos, setTodos }) => {
+  const pathname = usePathname();
+
   return (
     <>
-      <TodoAdd setTodos={setTodos} />
       <TodoList label="My Todos" setTodos={setTodos} todos={activeTodos} />
       <TodoList label="Completed" setTodos={setTodos} todos={completedTodos} />
     </>

@@ -15,14 +15,19 @@ import { useToast } from "../../use-toast";
 import { TodoDetail } from "@/lib/types/Todo";
 import TodoForm from "./todoForm";
 import { formSchema, todoDetailSchema } from "@/lib/utils/todoFormUtils";
-import { addTodo, getTodos } from "@/lib/utils/todoUtils";
+import {
+  addTodo as addTodoLocal,
+  getTodos as getTodosLocal,
+} from "@/lib/utils/todoUtils";
 import { Button } from "../../button";
 import { FaPlus } from "react-icons/fa";
+import { addTodoServerAct } from "../../../../lib/utils/todoUtilsServer";
 
-const TodoAdd = ({ setTodos }) => {
-  const [open, setOpen] = useState(false);
+const TodoAdd = ({ user, setTodos }) => {
+  const [open, setOpen] = useState<boolean>(false);
   const { toast } = useToast();
   const [tempTodoDetails, setTempTodoDetails] = useState<TodoDetail[]>([]);
+  const isGuestUser = !user;
 
   const form = useForm<zodinfer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,7 +50,7 @@ const TodoAdd = ({ setTodos }) => {
     });
   };
 
-  function onSubmit(todo: zodinfer<typeof formSchema>) {
+  async function onSubmit(todo: zodinfer<typeof formSchema>) {
     const { title, description, completed } = todo;
     const isTodoDetailsValid = validateTodoDetails(tempTodoDetails);
 
@@ -56,18 +61,23 @@ const TodoAdd = ({ setTodos }) => {
       });
       return;
     }
-
-    addTodo(title, description, tempTodoDetails, completed);
-    if (!addTodo) {
-      return toast({
-        variant: "destructive",
-        description: "Failed to add todo.",
-      });
+    if (isGuestUser) {
+      addTodoLocal("", title, description, tempTodoDetails, completed);
+      await setTodos(getTodosLocal());
+    } else {
+      await addTodoServerAct(
+        user?.id,
+        title,
+        description,
+        tempTodoDetails,
+        completed
+      );
     }
+
     toast({
-      description: "Your todo has been saved.",
+      description: "Your todo has been added.",
     });
-    setTodos(getTodos());
+
     form.reset();
     setTempTodoDetails([]);
     setOpen(false);

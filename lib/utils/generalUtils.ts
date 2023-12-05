@@ -1,15 +1,6 @@
-let fullfilled = false;
-let promise: Promise<void> | null = null;
+import { usePathname } from "next/navigation";
 
-const useTimeout = (ms: number) => {
-  if (!fullfilled) {
-    throw (promise ||= new Promise((res) => {
-      setTimeout(() => {
-        fullfilled = true;
-        res();
-      }, ms);
-    }));
-  }
+export const useGuestUser = () => {
+  const pathname = usePathname();
+  return pathname !== "/todo";
 };
-
-export default useTimeout;

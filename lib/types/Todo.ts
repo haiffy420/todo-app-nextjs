@@ -1,11 +1,10 @@
 type Todo = {
-  id: string;
+  _id: string;
+  userId: string;
   title: string;
   description: string;
   todoDetail: TodoDetail[];
   completed: boolean;
-  createdAt: string;
-  updatedAt: string;
 };
 
 type TodoDetail = {

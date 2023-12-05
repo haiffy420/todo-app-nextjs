@@ -13,28 +13,27 @@ import { useToast } from "../../use-toast";
 import { TodoDetail } from "@/lib/types/Todo";
 import TodoForm from "./todoForm";
 import { formSchema, todoDetailSchema } from "@/lib/utils/todoFormUtils";
-import { editTodo, getTodos } from "@/lib/utils/todoUtils";
+import {
+  editTodo as editTodoLocal,
+  getTodos as getTodosLocal,
+} from "@/lib/utils/todoUtils";
+import { useGuestUser } from "@/lib/utils/generalUtils";
+import { editTodoServerAct } from "@/lib/utils/todoUtilsServer";
 
-const TodoEdit = ({
-  id,
-  title,
-  description,
-  todoDetail,
-  completed,
-  setTodos,
-  setOpenEditForm,
-}) => {
+const TodoEdit = ({ todo, setTodos, setOpenEditForm }) => {
+  const { _id, title, description, todoDetail, completed } = todo;
+  const id = _id;
   const [tempTodoDetails, setTempTodoDetails] = useState<TodoDetail[]>(
-    todoDetail ? todoDetail : []
+    todoDetail || []
   );
   const { toast } = useToast();
-
+  const isGuestUser = useGuestUser();
   const form = useForm<zodinfer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: title,
       description: description,
-      todoDetail: todoDetail ? todoDetail : [],
+      todoDetail: todoDetail || [],
       completed: completed,
     },
   });
@@ -50,7 +49,7 @@ const TodoEdit = ({
     });
   };
 
-  function onSubmit(todo: zodinfer<typeof formSchema>) {
+  async function onSubmit(todo: zodinfer<typeof formSchema>) {
     const { title, description, completed } = todo;
     const isTodoDetailsValid = validateTodoDetails(tempTodoDetails);
 
@@ -62,18 +61,35 @@ const TodoEdit = ({
       return;
     }
 
-    editTodo(id, title, description, tempTodoDetails, completed);
-    if (!editTodo) {
-      return toast({
+    try {
+      if (isGuestUser) {
+        editTodoLocal(id, title, description, tempTodoDetails, completed);
+        toast({
+          description: "Todo has been edited.",
+        });
+        setOpenEditForm(false);
+        setTodos(getTodosLocal());
+        return;
+      } else {
+        await editTodoServerAct(
+          id,
+          title,
+          description,
+          tempTodoDetails,
+          completed
+        );
+        toast({
+          description: "Todo has been edited.",
+        });
+      }
+
+      return setOpenEditForm(false);
+    } catch {
+      toast({
         variant: "destructive",
-        description: "Failed to update todo.",
+        description: "Error editing todo.",
       });
     }
-    toast({
-      description: "Your todo has been edited.",
-    });
-    setTodos(getTodos());
-    setOpenEditForm(false);
   }
 
   return (

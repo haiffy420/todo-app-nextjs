@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import TodoDetailList from "./todoDetailList";
 import { ScrollArea } from "../../scroll-area";
+import { useState } from "react";
 
 const TodoForm = ({
   setTempTodoDetails,
@@ -24,6 +25,7 @@ const TodoForm = ({
   onSubmit,
   isEditing,
 }) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const handleAddTodoDetail = () => {
     const newTodoDetail = {
       id: uuidv4(),

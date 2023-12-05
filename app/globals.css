@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 95%;
+    --background: 0 0% 92%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -86,7 +86,17 @@
   dark:text-foreground text-background cursor-pointer
   p-4 translate-y-2
   shadow-[10px_10px_50px_-15px_rgba(0,0,0,0.7)] dark:shadow-none
-  transition hover:shadow-[10px_10px_15px_-3px_rgba(0,0,0,0.7)] hover:border-2 hover:border-solid hover:border-zinc-900
+  transition hover:shadow-[10px_10px_15px_-3px_rgba(0,0,0,0.7)] dark:border-2 dark:border-zinc-900
   hover:shadow-zinc-900 dark:hover:shadow-lg dark:hover:shadow-slate-300 dark:hover:border-slate-300
   hover:translate-y-0 duration-300 ease-in-out;
+}
+
+.login-card {
+  @apply flex flex-col justify-between h-1/2 w-80 md:w-96 gap-4 p-8
+  bg-zinc-900 dark:bg-zinc-950 rounded-xl border-2 border-foreground dark:border-zinc-900
+  dark:text-foreground text-background
+  shadow-[10px_10px_50px_-15px_rgba(0,0,0,0.7)] dark:shadow-none
+  transition hover:shadow-[10px_10px_15px_-3px_rgba(0,0,0,0.7)] hover:border-2 hover:border-solid hover:border-zinc-900
+  hover:shadow-zinc-900 dark:hover:shadow-lg dark:hover:shadow-slate-300 dark:hover:border-slate-300
+  duration-300 ease-in-out;
 }

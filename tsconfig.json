@@ -12,6 +12,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
@@ -23,6 +24,15 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "lib/utils/actions.js",
+    "lib/auth.js",
+    "lib/authConfig.js",
+    "lib/models.js"
+  ],
   "exclude": ["node_modules"]
 }

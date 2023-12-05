@@ -21,19 +21,19 @@ const updateStoredTodos = () => {
 };
 
 export const addTodo = (
+  userId: string,
   title: string,
   description: string,
   todoDetail: TodoDetail[],
   completed: boolean
 ) => {
   const newTodo: Todo = {
-    id: uuidv4(),
+    _id: uuidv4(),
+    userId,
     title,
     description,
     todoDetail,
     completed,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
   };
   todos = [...todos, newTodo];
   updateStoredTodos();
@@ -45,13 +45,13 @@ export const getTodos = (): Todo[] => {
 
 export const completeTodo = (id: string) => {
   todos = todos.map((todo) =>
-    todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    todo._id === id ? { ...todo, completed: !todo.completed } : todo
   );
   updateStoredTodos();
 };
 
 export const deleteTodo = (id: string) => {
-  todos = todos.filter((todo) => todo.id !== id);
+  todos = todos.filter((todo) => todo._id !== id);
   updateStoredTodos();
 };
 
@@ -63,7 +63,7 @@ export const editTodo = (
   completed: boolean
 ) => {
   todos = todos.map((todo) =>
-    todo.id === id
+    todo._id === id
       ? {
           ...todo,
           title,

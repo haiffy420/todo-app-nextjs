@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 
-const TodoSearch = (attributes) => {
+const SearchGuestMode = (attributes) => {
   const onSearchEventHandler = (event) => {
     attributes.onChange(event.target.value);
   };
@@ -8,7 +8,6 @@ const TodoSearch = (attributes) => {
   return (
     <Input
       {...attributes}
-      className=""
       placeholder="Search..."
       value={attributes.value}
       spellCheck={false}
@@ -17,4 +16,4 @@ const TodoSearch = (attributes) => {
   );
 };
 
-export default TodoSearch;
+export default SearchGuestMode;
