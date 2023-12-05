@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Navbar from "@/components/ui/navbar/navbar";
 import TodoSection from "@/components/ui/todo/todo";
 import { Toaster } from "@/components/ui/toaster";
