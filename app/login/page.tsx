@@ -30,7 +30,7 @@ const formSchema = z.object({
   password: z.string(),
 });
 
-export function LoginPage() {
+export default function LoginPage() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const { toast } = useToast();
@@ -148,5 +148,3 @@ export function LoginPage() {
     </>
   );
 }
-
-export default LoginPage;

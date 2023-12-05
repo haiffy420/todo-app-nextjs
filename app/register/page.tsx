@@ -48,7 +48,7 @@ const formSchema = z
     path: ["confirmPassword"],
   });
 
-export function RegisterPage() {
+export default function RegisterPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
   const searchParams = useSearchParams();
@@ -202,5 +202,3 @@ export function RegisterPage() {
     </>
   );
 }
-
-export default RegisterPage;

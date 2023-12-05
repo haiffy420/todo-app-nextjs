@@ -6,7 +6,7 @@ import { getTodos } from "@/lib/utils/actions.js";
 import TodoAdd from "@/components/ui/todo/todoForm/todoAdd";
 import { auth } from "@/lib/auth";
 
-export const Home = async ({ searchParams }) => {
+export default async function Home({ searchParams }) {
   const q = searchParams?.q || "";
   const session = await auth();
   const user = session?.user;
@@ -30,6 +30,4 @@ export const Home = async ({ searchParams }) => {
       <Toaster />
     </>
   );
-};
-
-export default Home;
+}
