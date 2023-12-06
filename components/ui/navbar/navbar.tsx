@@ -18,6 +18,7 @@ import {
 import { MdLogout } from "react-icons/md";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { signOutServerAct } from "@/lib/utils/todoUtilsServer";
 
 const Navbar = ({ user, search, setQuery, guestMode }) => {
   const { setTheme } = useTheme();
@@ -82,7 +83,10 @@ const Navbar = ({ user, search, setQuery, guestMode }) => {
                         <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 transition-all dark:rotate-0 dark:scale-100" />
                       </Button>
                     </div>
-                    <Button variant="outline">
+                    <Button
+                      variant="outline"
+                      onClick={() => signOutServerAct()}
+                    >
                       <span className="flex flex-row items-center justify-center gap-2">
                         <MdLogout />
                         Logout

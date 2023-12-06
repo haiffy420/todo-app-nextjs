@@ -17,7 +17,7 @@ import Link from "next/link";
 import { registerServerAct } from "@/lib/utils/todoUtilsServer";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
@@ -52,6 +52,16 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
   const searchParams = useSearchParams();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
+
   useEffect(() => {
     if (searchParams.get("failed") === "duplicate-email") {
       toast({
@@ -67,16 +77,7 @@ export default function RegisterPage() {
       });
       setLoading(false);
     }
-  }, [searchParams, toast]);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-  });
+  }, [searchParams, toast, form]);
 
   function onSubmit(loginDetails: z.infer<typeof formSchema>) {
     setLoading(true);
@@ -92,7 +93,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <>
+    <Suspense>
       <main className="flex min-h-screen flex-col items-center justify-center pb-10">
         <div className="pb-4">
           <h1 className="text-3xl font-bold">Todo App</h1>
@@ -128,6 +129,7 @@ export default function RegisterPage() {
                       <Input
                         className="bg-zinc-900 dark:bg-background"
                         placeholder="johndoe@gmail.com"
+                        autoComplete="email"
                         {...field}
                       />
                     </FormControl>
@@ -146,6 +148,7 @@ export default function RegisterPage() {
                         className="bg-zinc-900 dark:bg-background"
                         type="password"
                         placeholder="Password"
+                        autoComplete="new-password"
                         {...field}
                       />
                     </FormControl>
@@ -164,6 +167,7 @@ export default function RegisterPage() {
                         className="bg-zinc-900 dark:bg-background"
                         type="password"
                         placeholder="Confirm Password"
+                        autoComplete="new-password"
                         {...field}
                       />
                     </FormControl>
@@ -199,6 +203,6 @@ export default function RegisterPage() {
         </div>
       </main>
       <Toaster />
-    </>
+    </Suspense>
   );
 }

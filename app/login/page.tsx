@@ -15,11 +15,11 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { authServerAct } from "@/lib/utils/todoUtilsServer";
-import { useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,13 +41,6 @@ export default function LoginPage() {
       toast({ description: "Successfully registered." });
       setLoading(false);
     }
-    if (searchParams.get("login") === "failed") {
-      toast({
-        variant: "destructive",
-        description: "Wrong email or password!",
-      });
-      setLoading(false);
-    }
   }, [searchParams, toast]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,18 +51,27 @@ export default function LoginPage() {
     },
   });
 
-  function onSubmit(loginDetails: z.infer<typeof formSchema>) {
+  async function onSubmit(loginDetails: z.infer<typeof formSchema>) {
     setLoading(true);
     try {
-      authServerAct(loginDetails);
+      await authServerAct(loginDetails);
+      toast({
+        title: "Login successful.",
+        description: "Redirecting...",
+      });
     } catch (err) {
-      console.log(err);
-      toast({ description: "Something went wrong. Please try again." });
+      toast({
+        variant: "destructive",
+        title: "Login failed",
+        description: "Invalid credentials.",
+      });
+      form.reset();
+      setLoading(false);
     }
   }
 
   return (
-    <>
+    <Suspense>
       <main className="flex min-h-screen flex-col items-center justify-center pb-8">
         <div className="pb-4">
           <h1 className="text-3xl font-bold">Todo App</h1>
@@ -88,6 +90,7 @@ export default function LoginPage() {
                       <Input
                         className="bg-zinc-900 dark:bg-background"
                         placeholder="johndoe@gmail.com"
+                        autoComplete="email"
                         {...field}
                       />
                     </FormControl>
@@ -106,6 +109,7 @@ export default function LoginPage() {
                         className="bg-zinc-900 dark:bg-background"
                         type="password"
                         placeholder="Password"
+                        autoComplete="current-password"
                         {...field}
                       />
                     </FormControl>
@@ -145,6 +149,6 @@ export default function LoginPage() {
         </div>
       </main>
       <Toaster />
-    </>
+    </Suspense>
   );
 }

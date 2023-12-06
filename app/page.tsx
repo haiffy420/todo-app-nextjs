@@ -32,13 +32,7 @@ export default function Guest() {
   return (
     <>
       <Navbar user={null} search={query} setQuery={setQuery} guestMode={true} />
-      <main className="flex min-h-screen flex-col items-center p-8 gap-4">
-        <TodoAdd user={null} setTodos={setTodos} />
-        <TodoSection
-          activeTodos={activeTodos}
-          completedTodos={completedTodos}
-          setTodos={setTodos}
-        />
+      <main className="flex min-h-screen flex-col items-center p-4 gap-4">
         <div className="flex flex-col p-4 items-center justify-center text-sm font-medium rounded-md border-[1px] border-blue-500">
           <Info className="w-6 h-6 mb-2 text-blue-500" />
           <p>
@@ -49,6 +43,12 @@ export default function Guest() {
             Click here to register
           </Link>
         </div>
+        <TodoAdd user={null} setTodos={setTodos} />
+        <TodoSection
+          activeTodos={activeTodos}
+          completedTodos={completedTodos}
+          setTodos={setTodos}
+        />
       </main>
       <Footer />
       <Toaster />
