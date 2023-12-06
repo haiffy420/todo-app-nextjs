@@ -15,16 +15,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { MdLogout } from "react-icons/md";
+import { MdLogin, MdLogout } from "react-icons/md";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { signOutServerAct } from "@/lib/utils/todoUtilsServer";
+import Link from "next/link";
 
 const Navbar = ({ user, search, setQuery, guestMode }) => {
   const { setTheme } = useTheme();
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const name = user?.name.split(" ")[0] || null;
+  const name = user?.name.split(" ")[0] || "Guest";
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 500px)"); // Adjust the screen width as needed
     setIsSmallScreen(mediaQuery.matches);
@@ -83,15 +84,27 @@ const Navbar = ({ user, search, setQuery, guestMode }) => {
                         <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 transition-all dark:rotate-0 dark:scale-100" />
                       </Button>
                     </div>
-                    <Button
-                      variant="outline"
-                      onClick={() => signOutServerAct()}
-                    >
-                      <span className="flex flex-row items-center justify-center gap-2">
-                        <MdLogout />
-                        Logout
-                      </span>
-                    </Button>
+                    {user ? (
+                      <Button
+                        variant="outline"
+                        onClick={() => signOutServerAct()}
+                      >
+                        <span className="flex flex-row items-center justify-center gap-2">
+                          <MdLogout />
+                          Logout
+                        </span>
+                      </Button>
+                    ) : (
+                      <Button variant="outline">
+                        <Link
+                          href="/login"
+                          className="flex flex-row items-center justify-center gap-2"
+                        >
+                          <MdLogin />
+                          Login
+                        </Link>
+                      </Button>
+                    )}
                   </div>
                 </SheetContent>
               </Sheet>

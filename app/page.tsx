@@ -35,7 +35,7 @@ export default function Guest() {
       <main className="flex min-h-screen flex-col items-center p-4 gap-4">
         <div className="flex flex-col p-4 items-center justify-center text-sm font-medium rounded-md border-[1px] border-blue-500">
           <Info className="w-6 h-6 mb-2 text-blue-500" />
-          <p>
+          <p className="flex text-center items-center justify-center">
             You&lsquo;re currently using a guest account! Your todos will only
             be saved on this device.
           </p>
