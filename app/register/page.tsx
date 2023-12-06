@@ -194,9 +194,9 @@ export default function RegisterPage() {
             </form>
           </Form>
 
-          <p>
+          <p className="text-sm">
             Already have an account?{" "}
-            <Link href="/login" className="hover:text-blue-500">
+            <Link href="/login" className="hover:text-blue-500 font-bold">
               Login
             </Link>
           </p>

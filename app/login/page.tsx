@@ -65,7 +65,6 @@ export default function LoginPage() {
         title: "Login failed",
         description: "Invalid credentials.",
       });
-      form.reset();
       setLoading(false);
     }
   }
@@ -135,15 +134,15 @@ export default function LoginPage() {
               </div>
             </form>
           </Form>
-          <p>
+          <p className="text-sm">
             Don&apos;t have an account?{" "}
-            <Link href="/register" className="hover:text-blue-500">
+            <Link href="/register" className="hover:text-blue-500 font-bold">
               Register
             </Link>
           </p>
-          <p>
+          <p className="text-sm">
             <Link href="/" className="hover:text-blue-500">
-              Or login as a guest
+              Or continue as a guest
             </Link>
           </p>
         </div>
