@@ -16,16 +16,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import TodoDetailList from "./todoDetailList";
 import { ScrollArea } from "../../scroll-area";
-import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const TodoForm = ({
+  loading,
   setTempTodoDetails,
   tempTodoDetails,
   form,
   onSubmit,
   isEditing,
 }) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const handleAddTodoDetail = () => {
     const newTodoDetail = {
       id: uuidv4(),
@@ -136,15 +136,33 @@ const TodoForm = ({
             {isEditing ? (
               <DialogFooter className="flex flex-row justify-between">
                 <DialogClose asChild>
-                  <Button type="button" variant="secondary">
+                  <Button disabled={loading} type="button" variant="secondary">
                     Close
                   </Button>
                 </DialogClose>
-                <Button type="submit">Save Changes</Button>
+                <Button disabled={loading} type="submit">
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 animate-spin" />
+                      Please wait
+                    </>
+                  ) : (
+                    "Save Changes"
+                  )}
+                </Button>
               </DialogFooter>
             ) : (
               <DialogFooter>
-                <Button type="submit">Submit</Button>
+                <Button disabled={loading} type="submit">
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 animate-spin" />
+                      Please wait
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
               </DialogFooter>
             )}
           </form>

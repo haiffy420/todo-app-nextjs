@@ -24,6 +24,7 @@ import { FaPlus } from "react-icons/fa";
 import { addTodoServerAct } from "../../../../lib/utils/todoUtilsServer";
 
 const TodoAdd = ({ user, setTodos }) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { toast } = useToast();
   const [tempTodoDetails, setTempTodoDetails] = useState<TodoDetail[]>([]);
@@ -51,6 +52,7 @@ const TodoAdd = ({ user, setTodos }) => {
   };
 
   async function onSubmit(todo: zodinfer<typeof formSchema>) {
+    setLoading(true);
     const { title, description, completed } = todo;
     const isTodoDetailsValid = validateTodoDetails(tempTodoDetails);
 
@@ -78,6 +80,7 @@ const TodoAdd = ({ user, setTodos }) => {
       description: "Your todo has been added.",
     });
 
+    setLoading(false);
     form.reset();
     setTempTodoDetails([]);
     setOpen(false);
@@ -100,6 +103,7 @@ const TodoAdd = ({ user, setTodos }) => {
             <DialogTitle>Add Todo</DialogTitle>
           </DialogHeader>
           <TodoForm
+            loading={loading}
             setTempTodoDetails={setTempTodoDetails}
             tempTodoDetails={tempTodoDetails}
             form={form}

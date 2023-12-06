@@ -21,6 +21,7 @@ import { useGuestUser } from "@/lib/utils/generalUtils";
 import { editTodoServerAct } from "@/lib/utils/todoUtilsServer";
 
 const TodoEdit = ({ todo, setTodos, setOpenEditForm }) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const { _id, title, description, todoDetail, completed } = todo;
   const id = _id;
   const [tempTodoDetails, setTempTodoDetails] = useState<TodoDetail[]>(
@@ -50,6 +51,7 @@ const TodoEdit = ({ todo, setTodos, setOpenEditForm }) => {
   };
 
   async function onSubmit(todo: zodinfer<typeof formSchema>) {
+    setLoading(true);
     const { title, description, completed } = todo;
     const isTodoDetailsValid = validateTodoDetails(tempTodoDetails);
 
@@ -69,6 +71,7 @@ const TodoEdit = ({ todo, setTodos, setOpenEditForm }) => {
         });
         setOpenEditForm(false);
         setTodos(getTodosLocal());
+        setLoading(false);
         return;
       } else {
         await editTodoServerAct(
@@ -83,6 +86,7 @@ const TodoEdit = ({ todo, setTodos, setOpenEditForm }) => {
         });
       }
 
+      setLoading(false);
       return setOpenEditForm(false);
     } catch {
       toast({
@@ -98,6 +102,7 @@ const TodoEdit = ({ todo, setTodos, setOpenEditForm }) => {
         <DialogTitle>Edit Todo</DialogTitle>
       </DialogHeader>
       <TodoForm
+        loading={loading}
         setTempTodoDetails={setTempTodoDetails}
         tempTodoDetails={tempTodoDetails}
         form={form}
