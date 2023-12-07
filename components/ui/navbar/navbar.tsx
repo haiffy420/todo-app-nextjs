@@ -111,7 +111,7 @@ const Navbar = ({ user, search, setQuery, guestMode }) => {
             ) : (
               <>
                 <ModeToggle />
-                <ProfileToggle>{name}</ProfileToggle>
+                <ProfileToggle>{user ? name : null}</ProfileToggle>
               </>
             )}
           </div>
